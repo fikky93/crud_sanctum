@@ -15,10 +15,17 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Data::latest()->get();
-        return response()->json([DataResource::collection($data), 'Data fetched.']);
+        try {
+            $data = Data::latest()->get();
+            return response()->json([DataResource::collection($data), $request->bearerToken()]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'gagal',
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -49,7 +56,7 @@ class DataController extends Controller
             'foto_saksi' => $request->foto_saksi
          ]);
         
-        return response()->json(['Data created successfully.', new DataResource($data)]);
+        return response()->json([$request->bearerToken(), new DataResource($data)]);
     }
 
     /**
@@ -108,6 +115,6 @@ class DataController extends Controller
     {
         $data->delete();
 
-        return response()->json('Data deleted successfully');
+        return response()->json(['Data deleted successfully', $data]);
     }
 }

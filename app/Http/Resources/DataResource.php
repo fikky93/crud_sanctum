@@ -15,14 +15,14 @@ class DataResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            // 'id' => $this->id,
             'judul' => $this->judul,
             'isi' => $this->isi,
             'lokasi' => $this->lokasi,
             'foto_dokumentasi' => $this->foto_dokumentasi,
             'foto_saksi' => $this->foto_saksi,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            // 'created_at' => $this->created_at,
+            // 'updated_at' => $this->updated_at,
         ];
     }
 }
